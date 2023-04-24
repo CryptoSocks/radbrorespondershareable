@@ -57,10 +57,10 @@ def set_rules():
     sample_rules = [
         # {"value": "dog has:images", "tag": "dog pictures"},
         # {"value": "cat has:images -grumpy", "tag": "cat pictures"},
-        {"value": "milady -is:retweet"},
-        {"value": "Miladys -is:retweet"},
-        {"value": "miladies -is:retweet"},
-        {"value": "miladyresponder -is:retweet"},
+        {"value": "Radbro -is:retweet"},
+        {"value": "Radbros -is:retweet"},
+        {"value": "Rad -is:retweet"},
+        {"value": "radbroresponder -is:retweet"},
     ]
 
     payload = {"add": sample_rules}
@@ -96,12 +96,12 @@ def get_stream():
             lowercase_text = str(json_response['data']['text'].lower())
             print(lowercase_text)
             id = json_response['data']['id']
-            if "milady" in text or 'mlmady' in text or 'miladies' in text:
+            if "radbro" in text or 'rad' in text or 'radbros' in text:
                 try:
-                    if "iloveyou" in text or "iloveu" in text:
-                        tweet(text='I love you, milady 🤍', id=id)
+                    if "radbro" in text:
+                        tweet(text='radbro', id=id)
                     else:
-                        tweet(text='milady', id=id)
+                        tweet(text='bro', id=id)
                 except Exception as e:
                     print(e)
 
