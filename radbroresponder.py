@@ -60,7 +60,7 @@ def set_rules():
         {"value": "Radbro -is:retweet"},
         {"value": "Radbros -is:retweet"},
         {"value": "Rad -is:retweet"},
-        {"value": "radbroresponder -is:retweet"},
+        {"value": "bro -is:retweet"},
     ]
 
     payload = {"add": sample_rules}
@@ -100,8 +100,10 @@ def get_stream():
                 try:
                     if "radbro" in text:
                         tweet(text='radbro', id=id)
-                    else:
+                    elif "rad" in text:
                         tweet(text='bro', id=id)
+                    else: 
+                        tweet(text='rad', id=id)
                 except Exception as e:
                     print(e)
 
