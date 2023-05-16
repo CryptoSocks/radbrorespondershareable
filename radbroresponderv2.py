@@ -30,7 +30,7 @@ def loop_responses(response, since_id):
                     except Exception as e:
                         print(e)
             if response.meta['next_token'] is not None:
-                sleeper(15, last_requests)
+                sleeper(180, last_requests)
                 response = get_tweets(query=query, expansions=expansions, next_token=response.meta['next_token'])
                 last_requests.append(datetime.datetime.now())
             else:
@@ -42,7 +42,7 @@ def tl_stream():
     global last_requests
     since_id = None
     while True:
-        sleeper(15, last_requests)
+        sleeper(180, last_requests)
         response = get_tweets(query=query, expansions=expansions, since_id=since_id)
         last_requests.append(datetime.datetime.now())
         since_id = loop_responses(response, since_id)

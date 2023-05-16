@@ -23,7 +23,7 @@ last_like_request = []
 
 
 def sleeper(limit, request_list):
-    if len(request_list) == limit and request_list[0] + datetime.timedelta(minutes=15) <= datetime.datetime.now():
+    if len(request_list) >= limit and request_list[0] + datetime.timedelta(minutes=15) <= datetime.datetime.now():
         oldest_request = request_list.pop(0)
         print("too many requests eepy now " + datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
         sleep_length = (datetime.timedelta(minutes=15) - (datetime.datetime.now() - oldest_request)).seconds + 30
