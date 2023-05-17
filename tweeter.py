@@ -21,13 +21,28 @@ last_follow_request = [datetime.datetime.now() - datetime.timedelta(minutes=6)]
 last_tweet_request = []
 last_like_request = []
 
+"""
+current time 1:50pm
+time of earliest request 1:45pm
+if 1:45pm+ 15 min (2pm) is greater than or equal to 1:50pm
+"""
+
 
 def sleeper(limit, request_list):
-    if len(request_list) >= limit and request_list[0] + datetime.timedelta(minutes=15) <= datetime.datetime.now():
+    current_time = datetime.datetime.now()
+    request_rollover = None
+
+    if request_list:
+        request_rollover = request_list[0] + datetime.timedelta(minutes=15)
+        if request_rollover <= current_time:
+            request_list.pop(0)
+
+    if len(request_list) >= limit and request_rollover and request_rollover >= current_time:
         oldest_request = request_list.pop(0)
-        print("too many requests eepy now " + datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-        sleep_length = (datetime.timedelta(minutes=15) - (datetime.datetime.now() - oldest_request)).seconds + 30
-        print("wake me up at " + (datetime.datetime.now() + datetime.timedelta(seconds=sleep_length)).strftime(
+        print("too many requests eepy now " + current_time.strftime("%d/%m/%Y %H:%M:%S"))
+        sleep_length = (datetime.timedelta(minutes=15) - (current_time - oldest_request)).total_seconds() + 30
+        print("sleeping for " + str(sleep_length/60) + " minutes")
+        print("I'll wake up at " + (current_time + datetime.timedelta(seconds=sleep_length)).strftime(
             "%d/%m/%Y %H:%M:%S"))
         time.sleep(sleep_length)
 
@@ -65,7 +80,7 @@ def tweet(text, tweet_id, user_id, tweeted):
         """
         sleeper(50, last_like_request)
         sleeper(200, last_tweet_request)
-        print("\n" + username[0] + " said: \n\n" + text)
+        print("\n" + username[0] + " said:\n")
         print(tweeted)
         client.like(tweet_id=tweet_id)
         last_like_request.append(datetime.datetime.now())

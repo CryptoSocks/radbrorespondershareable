@@ -3,7 +3,7 @@ import regex as re
 import time
 import datetime
 
-query = '(radbro OR radbros OR Radbro OR Radbros -is:retweet)'
+query = '(radbro OR radbros OR Radbro OR Radbros) -is:retweet'
 expansions = 'author_id'
 last_requests = []
 
@@ -11,31 +11,24 @@ last_requests = []
 def loop_responses(response, since_id):
     global last_requests
     meta_params = response.meta
-    newest_id = meta_params['newest_id']
     if meta_params['result_count'] == 0:
         print("no new tweets sleep 1.5 min")
         time.sleep(90)
         return since_id
     else:
-        while True:
-            for response_line in response.data:
-                if response_line:
-                    text = response_line['text'].lower()
-                    text = re.sub(r"(?:\@|https?\://)\S+", "", text)
-                    user_id = response_line['author_id']
-                    tweet_id = response_line['id']
-                    try:
-                        if "radbro" in text:
-                            tweet(text='radbro', tweet_id=tweet_id, user_id=user_id, tweeted=text)
-                    except Exception as e:
-                        print(e)
-            if response.meta['next_token'] is not None:
-                sleeper(180, last_requests)
-                response = get_tweets(query=query, expansions=expansions, next_token=response.meta['next_token'])
-                last_requests.append(datetime.datetime.now())
-            else:
-                break
-        return newest_id
+        print("\nThe response has " + str(len(response.data)) + " tweets\n")
+        for response_line in response.data:
+            if response_line:
+                text = response_line['text'].lower()
+                text = re.sub(r"(?:\@|https?\://)\S+", "", text)
+                user_id = response_line['author_id']
+                tweet_id = response_line['id']
+                try:
+                    if "radbro" in text:
+                        tweet(text='radbro', tweet_id=tweet_id, user_id=user_id, tweeted=text)
+                except Exception as e:
+                    print(e)
+        return meta_params['newest_id']
 
 
 def tl_stream():
