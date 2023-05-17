@@ -65,25 +65,20 @@ def check_user_follows(user_id):
         return True
 
 
-def tweet(text, tweet_id, user_id, tweeted):
+def tweet(text, tweet_id, user_id, tweeted, liked):
     global last_tweet_request
     global last_like_request
     global followers
     user_follows = check_user_follows(user_id)
     if user_id != RESPONDER_ID and user_follows:
         username = [user.name for user in followers if user.id == user_id]
-        """
-        if text == '420':
-            media = api.media_upload(f'memes/miladyblunt.jpeg')
-            client.create_tweet(text='BLAZE IT', media_ids=[media.media_id], in_reply_to_tweet_id=id)
-        else:
-        """
-        sleeper(50, last_like_request)
-        sleeper(200, last_tweet_request)
         print("\n" + username[0] + " said:\n")
         print(tweeted)
-        client.like(tweet_id=tweet_id)
-        last_like_request.append(datetime.datetime.now())
+        if not liked:
+            sleeper(50, last_like_request)
+            client.like(tweet_id=tweet_id)
+            last_like_request.append(datetime.datetime.now())
+        sleeper(200, last_tweet_request)
         client.create_tweet(text=text, in_reply_to_tweet_id=tweet_id)
         last_tweet_request.append(datetime.datetime.now())
         print("\nLiked & radbro sent")
