@@ -14,18 +14,22 @@ client = tweepy.Client(
     wait_on_rate_limit=True
 )
 
+auth = tweepy.OAuth1UserHandler(
+    consumer_key=CONSUMER_KEY,
+    consumer_secret=CONSUMER_SECRET,
+    access_token=ACCESS_TOKEN,
+    access_token_secret=ACCESS_TOKEN_SECRET
+    )
+
+api = tweepy.API(auth)
+
+
 RESPONDER_ID = 1650231286215196679
 
 followers = []
 last_follow_request = [datetime.datetime.now() - datetime.timedelta(minutes=6)]
 last_tweet_request = []
 last_like_request = []
-
-"""
-current time 1:50pm
-time of earliest request 1:45pm
-if 1:45pm+ 15 min (2pm) is greater than or equal to 1:50pm
-"""
 
 
 def sleeper(limit, request_list):
@@ -50,6 +54,7 @@ def sleeper(limit, request_list):
 def get_tweets(query, next_token=None, since_id=None, expansions=None):
     return client.search_recent_tweets(query=query, next_token=next_token, since_id=since_id, expansions=expansions)
 
+
 def check_user_follows(user_id):
     global followers
     global last_follow_request
@@ -65,7 +70,7 @@ def check_user_follows(user_id):
         return True
 
 
-def tweet(text, tweet_id, user_id, tweeted, liked):
+def tweet(text, tweet_id, user_id, media_key, tweeted, liked):
     global last_tweet_request
     global last_like_request
     global followers
@@ -79,6 +84,10 @@ def tweet(text, tweet_id, user_id, tweeted, liked):
             client.like(tweet_id=tweet_id)
             last_like_request.append(datetime.datetime.now())
         sleeper(200, last_tweet_request)
-        client.create_tweet(text=text, in_reply_to_tweet_id=tweet_id)
-        last_tweet_request.append(datetime.datetime.now())
-        print("\nLiked & radbro sent")
+        if media_key:
+            media_id = api.media_upload(filename=media_key)
+            client.create_tweet(text=text, media_ids=[media_id.media_id_string], in_reply_to_tweet_id=tweet_id)
+        else:
+            client.create_tweet(text=text, in_reply_to_tweet_id=tweet_id)
+            last_tweet_request.append(datetime.datetime.now())
+            print("\nLiked & radbro sent")
