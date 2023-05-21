@@ -27,9 +27,15 @@ def process_tweet(tweet_response):
     if "radcat" in text:
         if "420" in text:
             send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply, media_key="./pics/420.jfif")
+        elif "1080" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/1080.jfif")
+        elif "based" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/based.jpg_medium")
         else:
             send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply, media_key="./pics/radcat.jfif")
-    if "radbro" in text:
+    elif "radbro" in text:
         if "$rad" in text:
             send_tweet(
                 text='Buy $RAD on sushiswap \n CA: 0xdDc6625FEcA10438857DD8660C021Cd1088806FB \n Link to Sushiswap: https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xdDc6625FEcA10438857DD8660C021Cd1088806FB \n Link to Dexscreener: https://dexscreener.com/ethereum/0x39940ee99171cdbbfdbd540b987e778dba8734dd',
@@ -46,8 +52,8 @@ def process_tweet(tweet_response):
             if any(love_expression in text for love_expression in love):
                 send_tweet(text='i love you, radbro', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply)
             elif "put that on my" in text:
-                send_tweet(text='put that on my radbro 😤', tweet_id=tweet_id, user_id=user_id, tweeted=text,
-                           liked=multi_reply)
+                send_tweet(text='i put that on my radbro 😤', tweet_id=tweet_id, user_id=user_id, tweeted=text,
+                           liked=multi_reply, media_key="./pics/radbro.png")
             elif "webring" in text:
                 send_tweet(text=esoterics, tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply)
             elif "lawyer" in text:
@@ -56,18 +62,21 @@ def process_tweet(tweet_response):
             elif "always has been" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/RWO.jfif")
+            elif "🤯" and "🦍" in text:
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                           media_key="./pics/mindblownape.jfif")
             elif "🤯" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/mindblown.jfif")
             elif "pump it" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/pumpit.png")
-            elif "420" in text:
-                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
-                           media_key="./pics/420.jfif")
             elif "ratio" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/Ratio.png")
+            elif "git em" in text:
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                           media_key="./pics/cum.jpg_medium")
             else:
                 send_tweet(text='radbro', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply)
 
@@ -101,9 +110,7 @@ def tl_stream():
 
 def main():
     tl_stream()
-    """
-    connect_to_endpoint(search_url, query_params)
-    """
+
 
 if __name__ == "__main__":
     main()
