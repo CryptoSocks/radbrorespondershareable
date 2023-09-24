@@ -3,7 +3,7 @@ import regex as re
 import time
 import datetime
 
-query = '(radbro OR radbros OR radbroresponder OR radcat) -is:retweet'
+query = '(radbro OR radbros OR radbroresponder OR radcat OR 拉德兄弟 OR 拉德猫) -is:retweet'
 expansions = 'author_id'
 last_requests = []
 
@@ -22,9 +22,16 @@ def process_tweet(tweet_response):
     tweet_id = tweet_response['id']
     multi_reply = False
     love = ["ily", "ilu", "i love you", "i love u"]
+    over = ["its over", "it's over", "it's so over", "its so over"]
     esoterics = "radbro webring is faustian apollonian olympian the extension of infinite space the struggle against elementary chthonic forces the construction of grand murals in his glory the war to subdue lower projects its a quintessentially aryan experience"
     shilling = False
-    if "radcat" in text:
+    if "拉德兄弟" in text:
+        send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                   media_key="./pics/radbroChinese.png")
+    elif "拉德猫" in text:
+        send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                   media_key="./pics/radcatChinese.png")
+    elif "radcat" in text:
         if "420" in text:
             send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply, media_key="./pics/420.jfif")
         elif "1080" in text:
@@ -33,6 +40,18 @@ def process_tweet(tweet_response):
         elif "based" in text:
             send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                        media_key="./pics/based.jpg_medium")
+        elif "free video" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/radcatvideo.jfif")
+        elif "check the chain" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/checkthechaincat.jfif")
+        elif "lore" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/radcatlore.jpg_medium")
+        elif "git em" in text:
+            send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                       media_key="./pics/catcum.jpg_large")
         else:
             send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply, media_key="./pics/radcat.jfif")
     elif "radbro" in text:
@@ -77,6 +96,15 @@ def process_tweet(tweet_response):
             elif "git em" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/cum.jpg_medium")
+            elif "check the chain" in text:
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                           media_key="./pics/checkthechain.png")
+            elif "ssv1" in text:
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                           media_key="./pics/union.jpg_large")
+            elif any(over_expression in text for over_expression in over):
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text,
+                           liked=multi_reply, media_key="./pics/itsover.jpg_medium")
             else:
                 send_tweet(text='radbro', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply)
 
@@ -102,7 +130,7 @@ def tl_stream():
     global last_requests
     since_id = None
     while True:
-        sleeper(180, last_requests)
+        sleeper(60, last_requests)
         response = get_tweets(query=query, expansions=expansions, since_id=since_id)
         last_requests.append(datetime.datetime.now())
         since_id = loop_responses(response, since_id)
