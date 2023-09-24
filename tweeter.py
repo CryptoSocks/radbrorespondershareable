@@ -26,8 +26,6 @@ api = tweepy.API(auth)
 
 RESPONDER_ID = 1650231286215196679
 
-followers = []
-last_follow_request = [datetime.datetime.now() - datetime.timedelta(minutes=6)]
 last_tweet_request = []
 last_like_request = []
 
@@ -55,29 +53,10 @@ def get_tweets(query, next_token=None, since_id=None, expansions=None):
     return client.search_recent_tweets(query=query, next_token=next_token, since_id=since_id, expansions=expansions)
 
 
-def check_user_follows(user_id):
-    global followers
-    global last_follow_request
-
-    if not any(user_id == follow.id for follow in followers):
-        if datetime.datetime.now() - last_follow_request[-1] <= datetime.timedelta(minutes=5):
-            return False
-        sleeper(15, last_follow_request)
-        followers = client.get_users_followers(id=RESPONDER_ID, max_results=1000)[0]
-        last_follow_request.append(datetime.datetime.now())
-        return any(user_id == follow.id for follow in followers)
-    else:
-        return True
-
-
 def tweet(text, tweet_id, user_id, media_key, tweeted, liked):
     global last_tweet_request
     global last_like_request
-    global followers
-    user_follows = check_user_follows(user_id)
-    if user_id != RESPONDER_ID and user_follows:
-        username = [user.name for user in followers if user.id == user_id]
-        print("\n" + username[0] + " said:\n")
+    if user_id != RESPONDER_ID:
         print(tweeted)
         if not liked:
             sleeper(50, last_like_request)

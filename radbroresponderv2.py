@@ -78,6 +78,9 @@ def process_tweet(tweet_response):
             elif "lawyer" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/lawyer.jfif")
+            elif "business" or "businessman" in text:
+                send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
+                           media_key="./pics/wagie.png_medium")
             elif "always has been" in text:
                 send_tweet(text='', tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply,
                            media_key="./pics/RWO.jfif")
