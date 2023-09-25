@@ -169,7 +169,8 @@ def process_tweet_v2(tweet_response):
             else:
                 reply = 'radbro'
     if not shilling:
-        send_tweet(text=reply, tweet_id=tweet_id, user_id=user_id, tweeted=text, media_key=media)
+        if reply != '' or media is not None:
+            send_tweet(text=reply, tweet_id=tweet_id, user_id=user_id, tweeted=text, media_key=media)
 
 def loop_responses(response, since_id):
     global last_requests
