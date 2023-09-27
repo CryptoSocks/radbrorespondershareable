@@ -24,25 +24,6 @@ last_tweet_request = []
 last_like_request = []
 
 
-def sleeper(limit, request_list):
-    current_time = datetime.datetime.now()
-    request_rollover = None
-
-    if request_list:
-        request_rollover = request_list[0] + datetime.timedelta(minutes=15)
-        if request_rollover <= current_time:
-            request_list.pop(0)
-
-    if len(request_list) >= limit and request_rollover and request_rollover >= current_time:
-        oldest_request = request_list.pop(0)
-        print("too many requests eepy now " + current_time.strftime("%d/%m/%Y %H:%M:%S"))
-        sleep_length = (datetime.timedelta(minutes=15) - (current_time - oldest_request)).total_seconds() + 30
-        print("sleeping for " + str(sleep_length/60) + " minutes")
-        print("I'll wake up at " + (current_time + datetime.timedelta(seconds=sleep_length)).strftime(
-            "%d/%m/%Y %H:%M:%S"))
-        time.sleep(sleep_length)
-
-
 def sleeper_v2(limit, request_list):
     current_time = datetime.datetime.now()
     while request_list and (request_list[0] + datetime.timedelta(minutes=15) < current_time):
