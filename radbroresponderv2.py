@@ -52,13 +52,13 @@ def process_tweet_v2(tweet_response):
     elif "radbro" in text:
         if "$rad" in text:
             send_tweet(
-                text='Buy $RAD on Uniswap \n CA: 0xdDc6625FEcA10438857DD8660C021Cd1088806FB \n Link to Uniswap: https://app.uniswap.org/swap?outputCurrency=0xddc6625feca10438857dd8660c021cd1088806fb&chain=ethereum \n Link to Dexscreener: https://dexscreener.com/ethereum/0x704160cbd110bcc2b4bf5d71830e590bc5685d3a',
+                text='Buy $RAD on Uniswap \n CA: 0xdDc6625FEcA10438857DD8660C021Cd1088806FB \n Link to Uniswap: https://app.uniswap.org/#/swap?outputCurrency=0xddc6625feca10438857dd8660c021cd1088806fb&chain=ethereum \n Link to Dexscreener: https://dexscreener.com/ethereum/0x704160cbd110bcc2b4bf5d71830e590bc5685d3a',
                 tweet_id=tweet_id, user_id=user_id, tweeted=text)
             shilling = True
             multi_reply = True
         if "$bro" in text:
             send_tweet(
-                text='Buy $BRO on uniswap \n CA: 0x6e08B5D1169765f94d5ACe5524F56E8ac75B77c6 \n Link to Uniswap: https://app.uniswap.com/#/swap?inputCurrency=0xddc6625feca10438857dd8660c021cd1088806fb&outputCurrency=0x6e08B5D1169765f94d5ACe5524F56E8ac75B77c6&chain=ethereum \n Link to Dexscreener: https://dexscreener.com/ethereum/0x0110660ec3fede0425183efd88cf5c4341ffc304',
+                text='Buy $BRO on Uniswap \n CA: 0x6e08B5D1169765f94d5ACe5524F56E8ac75B77c6 \n Link to Uniswap: https://app.uniswap.com/#/swap?inputCurrency=0xddc6625feca10438857dd8660c021cd1088806fb&outputCurrency=0x6e08B5D1169765f94d5ACe5524F56E8ac75B77c6&chain=ethereum \n Link to Dexscreener: https://dexscreener.com/ethereum/0x0110660ec3fede0425183efd88cf5c4341ffc304',
                 tweet_id=tweet_id, user_id=user_id, tweeted=text, liked=multi_reply)
             shilling = True
         if not shilling:
